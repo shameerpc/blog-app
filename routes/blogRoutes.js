@@ -6,6 +6,6 @@ import auth from '../middlewares/autherization.js'
 
 routes.post('/',auth,blogcontroller.createBlog)
 routes.post('/:id',auth,blogcontroller.updateBlog)
-
+routes.delete('/:id',auth,blogcontroller.deleteBlog)
 
 export default routes;

@@ -17,7 +17,7 @@ const blogcontroller={
                 const newBlog = new Blog({
                     title,
                     content,
-                    author:req.user._id,  
+                    author:req.user.data,  
                     status
                 });
         
@@ -61,6 +61,33 @@ const blogcontroller={
             error: error.message,
         });
     
+        }
+    },
+    deleteBlog: async(req,res)=>{
+        try {
+            console.log('Authenticated user:', req.user);
+            const blogId=req.params.id
+            const blog = await Blog.findByIdAndDelete(blogId);
+            if (!blog) {
+                return res.status(404).json({ message: 'Blog post not found' });
+            }
+            res.status(200).json({
+                success: true,
+                message: 'Blog post deleted successfully',
+                data: {
+                    deletedBlogId: blogId,
+                    deletedBlogTitle: blog.title,
+                    deletedAt: new Date().toISOString()
+                }
+            });
+
+            
+        } catch (error) {
+            console.error('Error deleting blog post:', error);
+            res.status(500).json({
+                message: 'Server error. Could not delete blog post.',
+                error: error.message,
+            });
         }
     }
 
