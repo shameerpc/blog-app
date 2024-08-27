@@ -11,13 +11,13 @@ const blogcontroller={
             if (!errors.isEmpty()) {
                 return res.status(400).json({ errors: errors.array() });
             }
-            const { title, content, author, status } = req.body;
+            const { title, content, status } = req.body;
 
                 // Create a new blog post
                 const newBlog = new Blog({
                     title,
                     content,
-                    author,  // Assuming the author ID is sent in the request body
+                    author:req.user._id,  
                     status
                 });
         
@@ -35,6 +35,34 @@ const blogcontroller={
         });
         }
     },
+    updateBlog: async(req,res)=>{
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
+            const { title, content, status } = req.body;
+            const blogId=req.params.id
+            const blog = await Blog.findById(blogId);
+            if (!blog) {
+                return res.status(404).json({ message: 'Blog post not found' });
+            }
+            blog.title = title || blog.title;
+            blog.content = content || blog.content;
+            blog.status = status !== undefined ? status : blog.status;
+            await blog.save();
+
+            res.status(200).json({ message: 'Blog post updated successfully', blog });
+
+        } catch (error) {
+            console.error('Error updating blog post:', error);
+        res.status(500).json({
+            message: 'Server error. Could not update blog post.',
+            error: error.message,
+        });
+    
+        }
+    }
 
 }
 
