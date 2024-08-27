@@ -22,6 +22,8 @@ routes.post('/register',  [
     next();
   },authcontroller.register)
 
+  routes.post('/login',authcontroller.login)
+
 
 export default routes;
 
