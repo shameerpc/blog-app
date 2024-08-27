@@ -89,6 +89,26 @@ const blogcontroller={
                 error: error.message,
             });
         }
+    },
+    getAllBlog: async (req,res)=>{
+        try {
+          const data=await Blog.find({author:req.user.data})
+          if(!data){
+            return res.status(404).json({ message: 'Blog post not found' });
+          }
+          res.status(200).json({
+            success: true,
+            message: 'Blog post get successfully',
+            data:data
+        });
+            
+        } catch (error) {
+            console.error('Error get blog post:', error);
+            res.status(500).json({
+                message: 'Server error. Could not delete blog post.',
+                error: error.message,
+            });
+        }
     }
 
 }
