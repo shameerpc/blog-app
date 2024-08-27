@@ -61,7 +61,7 @@ const authcontroller={
     }
     const token=jwt.sign({
         data: user.id
-      }, process.env.JWTSECRET, { expiresIn: 60 * 60 });
+      }, process.env.JWT_SECRET, { expiresIn: 60 * 60 });
     res.status(200).json({
         success: true,
         message: 'User login successfully',
