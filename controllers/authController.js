@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
 import User from '../models/user.js'
+import {hashPassword,comparePassword} from '../services/authService.js'
 import 'dotenv/config'
 
 const saltRounds = 10;
@@ -18,7 +18,7 @@ const authcontroller={
         return res.status(400).json({ msg: 'User already exists' });
       }
   
-      const hashedPassword = await bcrypt.hash(password, saltRounds);
+      const hashedPassword = await hashPassword(password)
   
       const data=new User({
           username:username,
@@ -55,13 +55,13 @@ const authcontroller={
    if(!user){
     res.status(401).json({ msg: 'no user found' })
    }
-         const checkPass=await bcrypt.compare(password, user.password);
+         const checkPass=await comparePassword(password, user.password);
     if(checkPass==false){
         res.status(401).json({msg:'password is not correct'})
     }
-    const token=jwt.sign({
-        data: user.id
-      }, process.env.JWT_SECRET, { expiresIn: 60 * 60 });
+    const token = jwt.sign({ id: user._id, username: user.username },
+         process.env.JWT_SECRET, { expiresIn: '1h' });
+
     res.status(200).json({
         success: true,
         message: 'User login successfully',

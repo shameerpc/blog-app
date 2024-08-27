@@ -17,7 +17,7 @@ const blogcontroller={
                 const newBlog = new Blog({
                     title,
                     content,
-                    author:req.user.data,  
+                    author:req.user.id,  
                     status
                 });
         
@@ -92,7 +92,7 @@ const blogcontroller={
     },
     getAllBlog: async (req,res)=>{
         try {
-          const data=await Blog.find({author:req.user.data})
+          const data=await Blog.find({author:req.user.id})
           if(!data){
             return res.status(404).json({ message: 'Blog post not found' });
           }
