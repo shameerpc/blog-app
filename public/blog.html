@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1 id="blog-title">Blog Title</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="blog-content">
+            <p id="blog-author">Author: </p>
+            <p id="blog-date">Published on: </p>
+            <p id="blog-text"></p>
+        </section>
+
+        <section id="edit-delete">
+            <button id="edit-button">Edit</button>
+            <button id="delete-button">Delete</button>
+        </section>
+
+        <section id="edit-section" style="display:none;">
+            <h2>Edit Blog Post</h2>
+            <form id="edit-form">
+                <div>
+                    <label for="edit-title">Title:</label>
+                    <input type="text" id="edit-title" required>
+                </div>
+                <div>
+                    <label for="edit-content">Content:</label>
+                    <textarea id="edit-content" rows="5" required></textarea>
+                </div>
+                <button type="submit">Update Post</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="js/scripts.js"></script>
+    <script src="js/blog.js"></script>
+</body>
+</html>
