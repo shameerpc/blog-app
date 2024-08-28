@@ -10,14 +10,13 @@ import 'dotenv/config'
 const app=express();
 
 connectDB()
+app.use(express.static('public')); 
 
 app.use(bodyParser.urlencoded({ extended: false }))
-
 app.use(bodyParser.json())
 
 
 app.use('/api/auth', authRoutes);
-
 app.use('/api/blogs', blogRoutes);
 
 
